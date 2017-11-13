@@ -1,18 +1,76 @@
 .mytext {
-    border:0;padding:10px;background:whitesmoke;
+    border:0;padding:0.625em;background:whitesmoke;
 }
 .text {
     width:75%;display:flex;flex-direction:column;
+}
+
+.text-l {
+    float:left;padding-right:10px;
 }
 
 .text-r {
     float:right;padding-left:10px;
 }
 
+.avatar {
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    width:25%;
+    float:left;
+    padding-right:10px;
+}
+
 .macro {
-    margin-top:5px;width:85%;border-radius:5px;padding:5px;display:flex;
+    margin-top:0.313em;width:85%;border-radius:0.313em;padding:0.313em;display:flex;
 }
 
 .msj-rta {
     float:right;background:whitesmoke;
 }
+
+.msj {
+    float:left;background:white;
+}
+
+.frame {
+    background:#e0e0de;
+    height:450px;
+    overflow:hidden;
+    padding:0;
+}
+
+ul {
+    width:100%;
+    list-style-type: none;
+    padding:18px;
+    position:absolute;
+    bottom:32px;
+    display:flex;
+    flex-direction: column;
+
+}
+
+.msj:before{
+    width: 0;
+    height: 0;
+    content:"";
+    top:-5px;
+    left:-14px;
+    position:relative;
+    border-style: solid;
+    border-width: 0 13px 13px 0;
+    border-color: transparent #ffffff transparent transparent;            
+}
+.msj-rta:after{
+    width: 0;
+    height: 0;
+    content:"";
+    top:-5px;
+    left:14px;
+    position:relative;
+    border-style: solid;
+    border-width: 13px 13px 0 0;
+    border-color: whitesmoke transparent transparent transparent;           
+}  

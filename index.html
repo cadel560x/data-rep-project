@@ -14,22 +14,34 @@
     <header>
       
     </header>
-    <main>
+    <main class="frame">
       <ul>
-        <li>
-          Hi
-        </li>
-        <li>
-          Hey
-        </li>
+         <li style="width: 100%"> 
+            <div class="msj macro"> 
+               <div class="text text-l"> 
+                  <p>Hi</p> 
+                  <p><small>2017-11-13 21:52</small></p>
+               </div> 
+            </div> 
+          </li>
+          <li style="width: 100%;"> 
+            <div class="msj-rta macro"> 
+               <div class="text text-r"> 
+                  <p>Hey</p> 
+                  <p><small>2017-11-13 21:53</small></p>
+               </div>
+            </div>
+            <div class="avatar" style="padding:0px 0px 0px 10px !important">
+            </div>                                 
+          </li>
       </ul>
     </main>
     <footer class="fixed-bottom text-light bg-dark">
       <form class="form-inline">
-        <section class="form-group macro" style="margin:auto">
+        <section class="form-group msj-rta macro" style="margin:auto; justify-content: flex-end">
           <label class="sr-only" for="user-input">User input</label>
-          <div class="input-group" style="background:whitesmoke !important">
-              <input id="user-input" class="form-control" placeholder="Type a message"/>
+          <div class="input-group text-r" style="background:whitesmoke !important; flex-grow: 5">
+              <input id="user-input" class="form-control mytext" placeholder="Type a message"/>
           </div>
           <div class="btn-group">
             <button class="btn btn-primary" type="submit">Send</button>
