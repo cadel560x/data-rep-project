@@ -5,6 +5,7 @@ import (
 	"html/template"
 	"log"
 	"net/http"
+	"path"
 )
 
 type elizaData struct {
@@ -17,10 +18,26 @@ func redirect(w http.ResponseWriter, r *http.Request) {
 
 func handlerEliza(w http.ResponseWriter, r *http.Request) {
 	// http.ServeFile(w, r, "eliza.html")
-	data := &elizaData{UserInput: "some user input"}
-	templ, _ := template.ParseFiles("eliza.html")
+	// data := &elizaData{UserInput: "some user input"}
+	// templ, _ := template.ParseFiles("eliza.html")
 
-	templ.Execute(w, data)
+	user := r.FormValue("user-input")
+
+	data := elizaData{UserInput: "some input"}
+
+	fp := path.Join("templates", "form.html")
+	tmpl, err := template.ParseFiles(fp)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+
+	// Pass template to http.ResponseWriter.
+	if err := tmpl.Execute(w, data); err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+	}
+
+	// templ.Execute(w, data)
 }
 
 func main() {
