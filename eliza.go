@@ -5,7 +5,6 @@ import (
 	"html/template"
 	"log"
 	"net/http"
-	"path"
 )
 
 type elizaData struct {
@@ -21,12 +20,12 @@ func handlerEliza(w http.ResponseWriter, r *http.Request) {
 	// data := &elizaData{UserInput: "some user input"}
 	// templ, _ := template.ParseFiles("eliza.html")
 
-	user := r.FormValue("user-input")
+	userInput := r.FormValue("user-input")
 
-	data := elizaData{UserInput: "some input"}
+	data := elizaData{userInput}
 
-	fp := path.Join("templates", "form.html")
-	tmpl, err := template.ParseFiles(fp)
+	// fp := path.Join("templates", "form.html")
+	tmpl, err := template.ParseFiles("eliza.html")
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
