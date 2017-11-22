@@ -36,6 +36,7 @@ func handlerEliza(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 	}
 
+	// fmt.Println(userInput)
 	// templ.Execute(w, data)
 }
 
