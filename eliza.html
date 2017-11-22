@@ -40,7 +40,7 @@
       </ul>
     </main>
     <footer class="fixed-bottom text-light bg-dark">
-      <form id="input-form" class="form-inline" method="POST" action="">
+      <form class="form-inline" method="POST" action="">
         <section class="form-group msj-rta macro" style="margin:auto; justify-content: flex-end">
           <label class="sr-only" for="user-input">User input</label>
           <div class="input-group text-r" style="background:whitesmoke !important; flex-grow: 5">
@@ -60,30 +60,59 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
     <script>
       $(document).ready(function (){
-        console.log( "document loaded" );
+        // console.log( "document loaded" );
 
-        $("#input-form").submit(function(event){
+        $("form").submit(function(event){
           event.preventDefault();
-          console.log( "form submitted" );
+          // console.log( "form submitted" );
 
-          // $.ajax({
-          //   url: '/ajax',
-          //   type: "post",
-          //   contentType: 'application/json; charset=utf-8',
-          //   data: JSON.stringify({ UserInput: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit.'}),
-          //   dataType: 'json',
-          //   success: function(r) {
-          //     $('#response').append(r.UserInput);
-          //   }
+          var formData = JSON.stringify({
+            'UserInput' : $('input[name=user-input]').val()
+          });
 
-          // }); // $.ajax
+          // console.log(formData);
 
-          $.post("/ajax", JSON.stringify({ UserInput: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit.'}), function(response){
-            // $("#mylist").append('<li>' + data.user + ' <i>' + data.joined + '</i></li>');
-            $('#response').append(response.UserInput);
-            console.log( "ajax submitted" );
-            console.log( "response", response );
-          }), 'json'; // $.post
+          $.ajax({
+            url: '/ajax',
+            type: "post",
+            contentType: 'application/json; charset=utf-8',
+            // data: JSON.stringify({ UserInput: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit.'}),
+            data: formData,
+            dataType: 'json',
+            encode: true
+          })
+          .done(function(r) {
+              $('#response').append(r.UserInput);
+          })
+          .fail(function(data) {
+            // show any errors
+            // best to remove for production
+            console.log(data);
+          })
+          ; // $.ajax
+
+          // $.post("/ajax", function(response){
+          // $.post("/ajax", JSON.stringify({ UserInput: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit.'}), function(response){
+          // $.post("/ajax", JSON.stringify({ UserInput: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit.'})
+          //   // $("#mylist").append('<li>' + data.user + ' <i>' + data.joined + '</i></li>');
+          //   // $('#response').append(response.UserInput);
+          //   // console.log( "ajax submitted" );
+          //   // console.log( "response", response );
+          // // }, 'json'); // $.post
+          // // })
+          // , 'json')
+          // .done(function(response){
+          //   $('#response').append(response.UserInput);
+          //   console.log( "ajax submitted" );
+          //   console.log( "response", response );
+          // })
+          // .fail(function(response){
+          //   // $("#mylist").append('<li>' + data.user + ' <i>' + data.joined + '</i></li>');
+          //   $('#response').append(response.UserInput);
+          //   console.log( "ajax submitted" );
+          //   console.log( "response", response );
+          // // }, 'json'); // $.post
+          // }); // $.post
 
         }); // $("#input-form").submit
       }); // $( document ).ready

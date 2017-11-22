@@ -1,53 +1,72 @@
+// Client/Server AJAX JSON Communication using golang web-server and JQuery
+// Visit: http://127.0.0.1:8080
 package main
 
 import (
-	"fmt"
-	"html/template"
-	"log"
-	"net/http"
+    "fmt"
+    "log"
+    "encoding/json"
+    "html/template"
+    "net/http"
+    // "path"
 )
 
-type elizaData struct {
-	UserInput string
+type Data struct {
+    UserInput string
+    ElizaOutput string
 }
 
 func redirect(w http.ResponseWriter, r *http.Request) {
 	http.Redirect(w, r, "http://localhost:8080/eliza", 301)
 }
 
-func handlerEliza(w http.ResponseWriter, r *http.Request) {
-	// http.ServeFile(w, r, "eliza.html")
-	// data := &elizaData{UserInput: "some user input"}
-	// templ, _ := template.ParseFiles("eliza.html")
+// Default Request Handler
+func defaultHandler(w http.ResponseWriter, r *http.Request) {
+    // fp := path.Join("templates", "ajax-json.html")
+    tmpl, err := template.ParseFiles("eliza.html")
+    if err != nil {
+        http.Error(w, err.Error(), http.StatusInternalServerError)
+        return
+    }
 
-	userInput := r.FormValue("user-input")
+    if err := tmpl.Execute(w, nil); err != nil {
+        http.Error(w, err.Error(), http.StatusInternalServerError)
+    }
+}
 
-	data := elizaData{userInput}
+// AJAX Request Handler
+func ajaxHandler(w http.ResponseWriter, r *http.Request) {
+    //parse request to struct
+    var d Data
+    err := json.NewDecoder(r.Body).Decode(&d)
+    if err != nil {
+        http.Error(w, err.Error(), http.StatusInternalServerError)
+    }
 
-	// fp := path.Join("templates", "form.html")
-	tmpl, err := template.ParseFiles("eliza.html")
-	if err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
-		return
-	}
+    fmt.Println(d.UserInput)
 
-	// Pass template to http.ResponseWriter.
-	if err := tmpl.Execute(w, data); err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
-	}
+    d.ElizaOutput = d.UserInput
+    // create json response from struct
+    a, err := json.Marshal(d)
 
-	// fmt.Println(userInput)
-	// templ.Execute(w, data)
+    fmt.Println(d.ElizaOutput)
+
+    if err != nil {
+        http.Error(w, err.Error(), http.StatusInternalServerError)
+    }
+    w.Write(a)
 }
 
 func main() {
-	http.HandleFunc("/", redirect)
-	http.HandleFunc("/eliza", handlerEliza)
+    http.HandleFunc("/", redirect)
+    http.HandleFunc("/eliza", defaultHandler)
+    http.HandleFunc("/ajax", ajaxHandler)
 
-	fmt.Println("Server running at port 8080...")
+    fmt.Println("Server running at port 8080...")
 
-	err := http.ListenAndServe(":8080", nil)
+    err := http.ListenAndServe(":8080", nil)
 	if err != nil {
 		log.Fatal("ListenAndServe: ", err)
 	}
 }
+
