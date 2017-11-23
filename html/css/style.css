@@ -75,3 +75,7 @@ ul {
     border-width: 13px 13px 0 0;
     border-color: whitesmoke transparent transparent transparent;           
 }*/
+
+main {
+    overflow-y: scroll;
+}
