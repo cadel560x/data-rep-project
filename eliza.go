@@ -11,9 +11,12 @@ import (
     // "path"
 )
 
-type Data struct {
-    UserInput string
-    ElizaOutput string
+type UserInput struct {
+    UserMessage string
+}
+
+type ElizaOutput struct {
+    ElizaMessage string
 }
 
 func redirect(w http.ResponseWriter, r *http.Request) {
@@ -37,24 +40,24 @@ func defaultHandler(w http.ResponseWriter, r *http.Request) {
 // AJAX Request Handler
 func ajaxHandler(w http.ResponseWriter, r *http.Request) {
     //parse request to struct
-    var d Data
-    err := json.NewDecoder(r.Body).Decode(&d)
+    var userInput UserInput
+    err := json.NewDecoder(r.Body).Decode(&userInput)
     if err != nil {
         http.Error(w, err.Error(), http.StatusInternalServerError)
     }
 
-    fmt.Println(d.UserInput)
+    // fmt.Println("DEBUG: ajaxHandler: userInput.UserMessage: " + userInput.UserMessage)
 
-    d.ElizaOutput = d.UserInput
+    var elizaOutput ElizaOutput
+    elizaOutput.ElizaMessage = userInput.UserMessage 
+    // fmt.Println("DEBUG: ajaxHandler: elizaOutput.ElizaMessage: " + elizaOutput.ElizaMessage)
+
     // create json response from struct
-    a, err := json.Marshal(d)
-
-    fmt.Println(d.ElizaOutput)
-
+    reply, err := json.Marshal(elizaOutput)
     if err != nil {
         http.Error(w, err.Error(), http.StatusInternalServerError)
     }
-    w.Write(a)
+    w.Write(reply)
 }
 
 func main() {
