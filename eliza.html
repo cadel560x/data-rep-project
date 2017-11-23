@@ -19,22 +19,6 @@
     </header>
     <main class="container frame">
       <ul>
-          <li style="width: 100%"> 
-            <div class="msj macro"> 
-                <div class="text text-l"> 
-                  <p>Hi</p> 
-                  <p><small>2017-11-13 21:52</small></p>
-                </div> 
-            </div> 
-          </li>
-          <li style="width: 100%;"> 
-            <div class="msj-rta macro"> 
-                <div class="text text-r"> 
-                  <p>Hey</p> 
-                  <p><small>2017-11-13 21:53</small></p>
-                </div>
-            </div>                                
-          </li>
       </ul>
     </main>
     <footer class="fixed-bottom text-light bg-dark">
@@ -69,7 +53,7 @@
             'UserMessage' : userInput
           });
 
-          console.log(formData);
+          // console.log(formData);
 
           // https://stackoverflow.com/questions/8701812/clear-form-after-submission-with-jquery
           $( "form" ).each(function(){
@@ -84,21 +68,20 @@
           // console.log(timestamp);
 
           // https://stackoverflow.com/questions/1145208/jquery-how-to-add-li-in-an-existing-ul
-          $("ul li:last")
-            .after($('<li>')
+          $('<li>')
+            .append($('<div>')
               .append($('<div>')
-                .append($('<div>')
+                .append($('<p>')
+                  .append(userInput))
                   .append($('<p>')
-                    .append(userInput))
-                    .append($('<p>')
-                      .append($('<small>')
-                        .append(timestamp)
-                      )
+                    .append($('<small>')
+                      .append(timestamp)
                     )
-                  .addClass("text text-r"))
-                .addClass("msj-rta macro"))
-              .css("width", "100%")
-            );
+                  )
+                .addClass("text text-r"))
+              .addClass("msj-rta macro"))
+            .css("width", "100%")
+            .appendTo( $("ul") ); // $('<li>')
 
           // https://scotch.io/tutorials/submitting-ajax-forms-with-jquery
           $.ajax({
@@ -110,24 +93,23 @@
           encode: true 
           })
           .done(function(response) {
-            console.log(response)
+            // console.log(response)
             // $('#response').append(response.ElizaMessage);
 
-            $("ul li:last")
-            .after($('<li>')
+          $('<li>')
+            .append($('<div>')
               .append($('<div>')
-                .append($('<div>')
+                .append($('<p>')
+                  .append(response.ElizaMessage))
                   .append($('<p>')
-                    .append(response.ElizaMessage))
-                    .append($('<p>')
-                      .append($('<small>')
-                        .append(timestamp)
-                      )
+                    .append($('<small>')
+                      .append(timestamp)
                     )
-                  .addClass("text text-l"))
-                .addClass("msj-rta macro"))
-              .css("width", "100%")
-            ); // $("ul li:last")
+                  )
+                .addClass("text text-l"))
+              .addClass("msj-rta macro"))
+            .css("width", "100%")
+            .appendTo( $("ul") ); // $('<li>')
 
           }) // $.ajax().done()
 
