@@ -39,11 +39,8 @@ func ajaxHandler(w http.ResponseWriter, r *http.Request) {
 } // ajaxHandler
 
 func main() {
-	// http.HandleFunc("/eliza", defaultHandler)
 	http.HandleFunc("/ajax", ajaxHandler)
-	// http.HandleFunc("/css", cssHandler)
 	http.Handle("/", http.FileServer(http.Dir("./html")))
-	// http.HandleFunc("/", redirect) // Root URN '/' redirects to '/eliza'
 
 	log.Printf("Starting server at port 8080...")
 	err := http.ListenAndServe(":8080", nil)
