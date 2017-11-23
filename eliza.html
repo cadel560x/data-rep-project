@@ -14,7 +14,7 @@
   <body>
     <header>
       <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <a class="navbar-brand" href="#">Navbar</a>
+        <span class="navbar-brand navbar-title">ELIZA</span>
       </nav>
     </header>
     <main class="container frame">
@@ -33,9 +33,7 @@
                   <p>Hey</p> 
                   <p><small>2017-11-13 21:53</small></p>
                 </div>
-            </div>
-            <div class="avatar" style="padding:0px 0px 0px 10px !important">
-            </div>                                 
+            </div>                                
           </li>
       </ul>
     </main>
@@ -52,7 +50,7 @@
         </section>
       </form>
     </footer>
-    <p id="response"></p>
+    <!-- <p id="response"></p> -->
 
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
@@ -78,6 +76,13 @@
             this.reset();
           });
 
+          // https://stackoverflow.com/questions/3552461/how-to-format-a-javascript-date
+          // https://stackoverflow.com/questions/5631384/remove-everything-after-a-certain-character
+          // var timestamp = new Date().toISOString().replace("T", " ").replace(/\..*/, "")
+          var timestamp = new Date().toISOString().replace("T", " ").replace("Z", "")
+          
+          // console.log(timestamp);
+
           // https://stackoverflow.com/questions/1145208/jquery-how-to-add-li-in-an-existing-ul
           $("ul li:last")
             .after($('<li>')
@@ -85,10 +90,17 @@
                 .append($('<div>')
                   .append($('<p>')
                     .append(userInput))
+                    .append($('<p>')
+                      .append($('<small>')
+                        .append(timestamp)
+                      )
+                    )
                   .addClass("text text-r"))
                 .addClass("msj-rta macro"))
+              .css("width", "100%")
             );
 
+          // https://scotch.io/tutorials/submitting-ajax-forms-with-jquery
           $.ajax({
           url: '/ajax',
           type: "post",
@@ -99,13 +111,30 @@
           })
           .done(function(response) {
             console.log(response)
-            $('#response').append(response.ElizaMessage);
-          })
+            // $('#response').append(response.ElizaMessage);
+
+            $("ul li:last")
+            .after($('<li>')
+              .append($('<div>')
+                .append($('<div>')
+                  .append($('<p>')
+                    .append(response.ElizaMessage))
+                    .append($('<p>')
+                      .append($('<small>')
+                        .append(timestamp)
+                      )
+                    )
+                  .addClass("text text-l"))
+                .addClass("msj-rta macro"))
+              .css("width", "100%")
+            ); // $("ul li:last")
+
+          }) // $.ajax().done()
+
           .fail(function(data) {
             // show any errors
-            // best to remove for production
             console.log(data);
-          })
+          }) // $.ajax().fail()
           ; // $.ajax
 
         }); // $("#input-form").submit
