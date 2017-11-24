@@ -11,7 +11,7 @@ First and foremost, you will need to install [Go](https://golang.org/dl/) and [G
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Open your terminal/cmd in the folder you wish to download the repository and execute the following
 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;```> git clone https://github.com/cadel560x/data-rep-project```
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;```> git clone https://github.com/cadel560x/data-rep-project.git```
 
 **2. Command Prompt**
 
