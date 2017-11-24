@@ -1,3 +1,29 @@
+function getTimeStamp() {
+  var timestamp = new Date().toISOString().replace("T", " ").replace("Z", "");
+
+  return timestamp;
+} // getTimeStamp
+
+// Put a timestamp to eliza's first message
+$("#first-timestamp").html(getTimeStamp);
+
+$("input").on("keyup", function (e) {
+  if (e.which == 13) {
+    var text = $(this).val();
+    if (text !== "") {
+      $("form").submit(e)
+    }
+  }
+}); // $("#mytext").on
+
+function sleep(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+async function delayResponse(timeOut) {
+  await sleep(timeOut);
+}
+
 $("form").submit(function(event){
   event.preventDefault();
   // console.log( "form submitted" );
@@ -18,7 +44,7 @@ $("form").submit(function(event){
   // https://stackoverflow.com/questions/3552461/how-to-format-a-javascript-date
   // https://stackoverflow.com/questions/5631384/remove-everything-after-a-certain-character
   // var timestamp = new Date().toISOString().replace("T", " ").replace(/\..*/, "")
-  var timestamp = new Date().toISOString().replace("T", " ").replace("Z", "")
+  var timestamp = getTimeStamp();
   
   // console.log(timestamp);
 
@@ -38,6 +64,13 @@ $("form").submit(function(event){
     .css("width", "100%")
     .appendTo( $("ul") ); // $('<li>')
 
+  // Wait between 1 and 4 seconds to make the response more human
+  var timeOut = Math.floor(Math.random() * (4000 - 1000) + 1000);
+  console.log("DEBUG: delayResponse: timeOut: ", timeOut);
+  delayResponse(timeOut);
+
+    // setTimeout(function(){}, Math.random() * (4000 - 1000) + 1000);
+
   // https://scotch.io/tutorials/submitting-ajax-forms-with-jquery
   $.ajax({
   url: '/ajax',
@@ -49,22 +82,21 @@ $("form").submit(function(event){
   })
   .done(function(response) {
     // console.log(response)
-    // $('#response').append(response.ElizaMessage);
 
-  $('<li>')
-    .append($('<div>')
+    $('<li>')
       .append($('<div>')
-        .append($('<p>')
-          .append(response.ServerMessage))
+        .append($('<div>')
           .append($('<p>')
-            .append($('<small>')
-              .append(timestamp)
+            .append(response.ServerMessage))
+            .append($('<p>')
+              .append($('<small>')
+                .append(timestamp)
+              )
             )
-          )
-        .addClass("text text-l"))
-      .addClass("msj-rta macro"))
-    .css("width", "100%")
-    .appendTo( $("ul") ); // $('<li>')
+          .addClass("text text-l"))
+        .addClass("msj macro"))
+      .css("width", "100%")
+      .appendTo( $("ul") ); // $('<li>')
 
   }) // $.ajax().done()
 

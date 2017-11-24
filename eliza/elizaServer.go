@@ -4,9 +4,8 @@ import (
 	"encoding/json"
 	"html/template"
 	"net/http"
+	"log"
 )
-
-// HTTP server section
 
 // Structs for using JSON
 type UserInput struct {
@@ -18,12 +17,12 @@ type ServerOutput struct {
 }
 
 // Redirect to '/eliza'
-func redirect(w http.ResponseWriter, r *http.Request) {
+func Redirect(w http.ResponseWriter, r *http.Request) {
 	http.Redirect(w, r, "http://localhost:8080/eliza", 301)
 }
 
 // Default Request Handler
-func defaultHandler(w http.ResponseWriter, r *http.Request) {
+func DefaultHandler(w http.ResponseWriter, r *http.Request) {
 	// fp := path.Join("templates", "ajax-json.html")
 	tmpl, err := template.ParseFiles("eliza.html")
 	if err != nil {
@@ -38,7 +37,7 @@ func defaultHandler(w http.ResponseWriter, r *http.Request) {
 } // defaultHandler
 
 // AJAX Request Handler
-func ajaxHandler(w http.ResponseWriter, r *http.Request) {
+func AjaxHandler(w http.ResponseWriter, r *http.Request) {
 	//parse request to struct
 	var userInput UserInput
 	err := json.NewDecoder(r.Body).Decode(&userInput)
@@ -46,16 +45,15 @@ func ajaxHandler(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 	}
 
-	// fmt.Println("DEBUG: ajaxHandler: userInput.UserMessage: " + userInput.UserMessage)
+	// log.Println("DEBUG: eliza.AjaxHandler: userInput.UserMessage: " + userInput.UserMessage)
 
 	// Create a new instance of Eliza.
 	eliza := FromFiles("data/responses.txt", "data/substitutions.txt")
 
 	var elizaOutput ServerOutput
-	// elizaOutput.ElizaMessage = ElizaResponse(userInput.UserMessage)
 	elizaOutput.ServerMessage = eliza.RespondTo(userInput.UserMessage)
 
-	// fmt.Println("DEBUG: ajaxHandler: elizaOutput.ElizaMessage: " + elizaOutput.ElizaMessage)
+	// log.Println("DEBUG: eliza.AjaxHandler: elizaOutput.ElizaMessage: " + elizaOutput.ElizaMessage)
 
 	// create json response from struct
 	reply, err := json.Marshal(elizaOutput)
@@ -64,4 +62,15 @@ func ajaxHandler(w http.ResponseWriter, r *http.Request) {
 	}
 	w.Write(reply)
 
-} // ajaxHandler
+} // AjaxHandler
+
+func Start() {
+	http.HandleFunc("/ajax", AjaxHandler)
+	http.Handle("/", http.FileServer(http.Dir("./html")))
+
+	log.Printf("Starting server at port 8080...")
+	err := http.ListenAndServe(":8080", nil)
+	if err != nil {
+		log.Fatal("ListenAndServe: ", err)
+	}
+}

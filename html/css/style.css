@@ -34,22 +34,26 @@
     float:left;background:white;
 }
 
-.frame {
-    background:#e0e0de;
-    height:450px;
-    overflow:hidden;
-    padding:0;
+.scroll{
+    background-color: #e0e0de;
+    height: auto;
+    max-height: 100%;
+    overflow-x: hidden;
+    overflow-y: scroll;
+    min-width: 135px;
+    margin-top: 100px;
 }
 
 ul {
     width:100%;
-    list-style-type: none;
-    padding:18px;
-    position:absolute;
-    bottom:32px;
     display:flex;
     flex-direction: column;
-
+    position:absolute;
+    list-style-type: none;
+    padding: 1.125em;
+    overflow-x: hidden;
+    overflow-y: scroll;
+    /*bottom:32px;*/
 }
 
 /*
@@ -77,5 +81,12 @@ ul {
 }*/
 
 main {
+    margin: auto;
+    position: relative;
+    overflow-x: hidden;
     overflow-y: scroll;
+    background:#e0e0de;
+    height:450px;
+    overflow:hidden;
+    padding:0;
 }

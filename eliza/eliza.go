@@ -10,6 +10,35 @@ import (
 	"strings"
 )
 
+// This function is never used!
+// Response my own attempt to create a response regex'ing the user's input
+func Response(input string) string {
+
+	if matched, _ := regexp.MatchString(`(?i).*\bfather\b.*`, input); matched {
+		return "Why don't you tell me more about your father?"
+	}
+
+	// re := regexp.MustCompile(`(?i)I am [^.?!]*[.?!]?`)    ([^.?!]*)[.?!]?
+	re := regexp.MustCompile(`(?i).*\bI'?\s*a?m \b([^.?!]*)[.?!]?`)
+	if matched := re.MatchString(input); matched {
+		subMatch := re.ReplaceAllString(input, "$1?")
+		reflectedString := Reflect(subMatch)
+		// return re.ReplaceAllString(input, "How do you know you are $1?")
+		return "How do you know you are " + reflectedString
+	}
+
+	responses := []string{
+		"I'm not sure what you're trying to say. Could you explain it to me?",
+		"How does that make you feel?",
+		"Why do you say that?",
+	}
+
+	randindex := rand.Intn(len(responses))
+
+	return responses[randindex]
+}
+
+// This function is never used!
 // Reflect my own attempt to reflect 'you' object pronoun to 'I' subject pronoun based on prepositions found
 func Reflect(input string) string {
 	// Split the input on word boundaries.
@@ -84,6 +113,9 @@ func Reflect(input string) string {
 	return strings.Join(tokens, ``)
 
 } // Reflect
+
+
+
 
 // Eliza chatbot engine
 // As seen in https://github.com/data-representation/eliza teaching aid
