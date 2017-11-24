@@ -54,7 +54,7 @@ func AjaxHandler(w http.ResponseWriter, r *http.Request) {
 
 	// Create a wait between half a second and three second to make eliza more human
 	rand.Seed(time.Now().Unix())
-	sleepTime := rand.Intn(3000-500) + 500
+	sleepTime := rand.Intn(5000-1500) + 1500
 	time.Sleep(time.Duration(sleepTime) * time.Millisecond)
 
 	var elizaOutput ServerOutput

@@ -66,6 +66,41 @@ $("form").submit(function(event){
 
     $("li").slideDown( 300 );
 
+    $('<li>')
+    .append($('<div>')
+      .append($('<div>')
+        .append($('<img>')
+          .addClass("img-circle")
+          .css("width", "100%")
+          .attr("src", "/images/eliza-avatar.png"))
+        .addClass("avatar")
+      .css("padding", "0px 10px 0px 10px"))
+      .append($('<div>')
+        .append($('<p>')
+          .append("Typing")
+          .append($('<span>')
+            .addClass("dots"))
+          .addClass("server-response"))
+          .append($('<p>')
+            .append($('<small>')
+            )
+          )
+        .addClass("text text-l"))
+      .addClass("msj macro"))
+    .css("width", "100%")
+    .appendTo( $("ul") ); // $('<li>')
+
+    $("li").slideDown( 400 );
+
+    setInterval(function() {
+      var th = $('.dots');
+      if(th.text().length < 5){
+          th.text(th.text()+".");
+      }else{
+          th.text("");
+      }
+    }, 300);
+
   // https://scotch.io/tutorials/submitting-ajax-forms-with-jquery
   $.ajax({
   url: '/ajax',
@@ -78,31 +113,32 @@ $("form").submit(function(event){
   .done(function(response) {
     // console.log(response)
 
-    var li = $('<li>')
-      .append($('<div>')
-        .append($('<div>')
-          .append($('<img>')
-            .addClass("img-circle")
-            .css("width", "100%")
-            .attr("src", "/images/eliza-avatar.png"))
-          .addClass("avatar")
-        .css("padding", "0px 10px 0px 10px"))
-        .append($('<div>')
-          .append($('<p>')
-            .append(response.ServerMessage))
-            .append($('<p>')
-              .append($('<small>')
-                .append(getTimeStamp())
-              )
-            )
-          .addClass("text text-l"))
-        .addClass("msj macro"))
-      .css("width", "100%")
-      .appendTo( $("ul") ); // $('<li>')
+    // $('<li>')
+    //   .append($('<div>')
+    //     .append($('<div>')
+    //       .append($('<img>')
+    //         .addClass("img-circle")
+    //         .css("width", "100%")
+    //         .attr("src", "/images/eliza-avatar.png"))
+    //       .addClass("avatar")
+    //     .css("padding", "0px 10px 0px 10px"))
+    //     .append($('<div>')
+    //       .append($('<p>')
+    //         .append(response.ServerMessage))
+    //         .append($('<p>')
+    //           .append($('<small>')
+    //             .append(getTimeStamp())
+    //           )
+    //         )
+    //       .addClass("text text-l"))
+    //     .addClass("msj macro"))
+    //   .css("width", "100%")
+    //   .appendTo( $("ul") ); // $('<li>')
 
-      $("li").slideDown( 300 );
+      // $("li").slideDown( 300 );
 
-      // $( "li" ).last().animate({left: '250px'});
+      $(".server-response").last().html(response.ServerMessage);
+      $("small").last().html(getTimeStamp());
 
   }) // $.ajax().done()
 
