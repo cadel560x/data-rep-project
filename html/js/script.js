@@ -16,14 +16,6 @@ $("input").on("keyup", function (e) {
   }
 }); // $("#mytext").on
 
-function sleep(ms) {
-  return new Promise(resolve => setTimeout(resolve, ms));
-}
-
-async function delayResponse(timeOut) {
-  await sleep(timeOut);
-}
-
 $("form").submit(function(event){
   event.preventDefault();
   // console.log( "form submitted" );
@@ -63,13 +55,6 @@ $("form").submit(function(event){
       .addClass("msj-rta macro"))
     .css("width", "100%")
     .appendTo( $("ul") ); // $('<li>')
-
-  // Wait between 1 and 4 seconds to make the response more human
-  var timeOut = Math.floor(Math.random() * (4000 - 1000) + 1000);
-  console.log("DEBUG: delayResponse: timeOut: ", timeOut);
-  delayResponse(timeOut);
-
-    // setTimeout(function(){}, Math.random() * (4000 - 1000) + 1000);
 
   // https://scotch.io/tutorials/submitting-ajax-forms-with-jquery
   $.ajax({

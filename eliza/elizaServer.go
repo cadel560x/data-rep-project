@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"html/template"
 	"net/http"
+	"time"
 	"log"
 )
 
@@ -49,6 +50,11 @@ func AjaxHandler(w http.ResponseWriter, r *http.Request) {
 
 	// Create a new instance of Eliza.
 	eliza := FromFiles("data/responses.txt", "data/substitutions.txt")
+
+	// Create a wait between half a second and three second to make eliza more human
+	rand.Seed(time.Now().Unix())
+	sleepTime := rand.Intn(3000 - 500) + 3000
+	time.Sleep(3000 * time.Millisecond)
 
 	var elizaOutput ServerOutput
 	elizaOutput.ServerMessage = eliza.RespondTo(userInput.UserMessage)
