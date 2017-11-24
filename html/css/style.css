@@ -1,3 +1,4 @@
+/* https://bootsnipp.com/gilsongilbert  */
 .mytext {
     border:0;padding:0.625em;background:whitesmoke;
 }
@@ -44,6 +45,10 @@
     margin-top: 100px;
 }
 
+.navbar {
+    justify-content: center;
+}
+
 ul {
     width:100%;
     display:flex;
@@ -53,7 +58,7 @@ ul {
     padding: 1.125em;
     overflow-x: hidden;
     overflow-y: scroll;
-    /*bottom:32px;*/
+    bottom:32px;
 }
 
 /*
@@ -80,7 +85,9 @@ ul {
     border-color: whitesmoke transparent transparent transparent;           
 }*/
 
+
 main {
+    height: 100%;
     margin: auto;
     position: relative;
     overflow-x: hidden;
@@ -88,7 +95,12 @@ main {
     background:#e0e0de;
     height:450px;
     overflow:hidden;
-    padding:0;
+    padding:0; 
+}
+
+footer {
+    margin-bottom:  1.125em;
+    padding:  1.125em;
 }
 
 body {
