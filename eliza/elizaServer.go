@@ -3,9 +3,10 @@ package eliza
 import (
 	"encoding/json"
 	"html/template"
+	"log"
+	"math/rand"
 	"net/http"
 	"time"
-	"log"
 )
 
 // Structs for using JSON
@@ -22,7 +23,7 @@ func Redirect(w http.ResponseWriter, r *http.Request) {
 	http.Redirect(w, r, "http://localhost:8080/eliza", 301)
 }
 
-// Default Request Handler
+// DefaultHandler
 func DefaultHandler(w http.ResponseWriter, r *http.Request) {
 	// fp := path.Join("templates", "ajax-json.html")
 	tmpl, err := template.ParseFiles("eliza.html")
@@ -37,7 +38,7 @@ func DefaultHandler(w http.ResponseWriter, r *http.Request) {
 
 } // defaultHandler
 
-// AJAX Request Handler
+// AjaxHandler receives/sends ajax requests
 func AjaxHandler(w http.ResponseWriter, r *http.Request) {
 	//parse request to struct
 	var userInput UserInput
@@ -53,8 +54,8 @@ func AjaxHandler(w http.ResponseWriter, r *http.Request) {
 
 	// Create a wait between half a second and three second to make eliza more human
 	rand.Seed(time.Now().Unix())
-	sleepTime := rand.Intn(3000 - 500) + 3000
-	time.Sleep(3000 * time.Millisecond)
+	sleepTime := rand.Intn(3000-500) + 500
+	time.Sleep(time.Duration(sleepTime) * time.Millisecond)
 
 	var elizaOutput ServerOutput
 	elizaOutput.ServerMessage = eliza.RespondTo(userInput.UserMessage)

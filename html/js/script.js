@@ -8,6 +8,8 @@ function getTimeStamp() {
 // Put a timestamp to eliza's first message
 $("#first-timestamp").html(getTimeStamp);
 
+$("li").slideDown( 300 );
+
 // Submit the form when the key enter is pressed
 $("input").on("keyup", function (e) {
   if (e.which == 13) {
@@ -57,10 +59,12 @@ $("form").submit(function(event){
           .css("width", "100%")
           .attr("src", "/images/user-avatar.png"))
         .addClass("avatar")
-        .css("padding", "0px 0px 0px 10px"))
+        .css("padding", "0px 10px 0px 10px"))
       .addClass("msj-rta macro"))
     .css("width", "100%")
     .appendTo( $("ul") ); // $('<li>')
+
+    $("li").slideDown( 300 );
 
   // https://scotch.io/tutorials/submitting-ajax-forms-with-jquery
   $.ajax({
@@ -74,8 +78,15 @@ $("form").submit(function(event){
   .done(function(response) {
     // console.log(response)
 
-    $('<li>')
+    var li = $('<li>')
       .append($('<div>')
+        .append($('<div>')
+          .append($('<img>')
+            .addClass("img-circle")
+            .css("width", "100%")
+            .attr("src", "/images/eliza-avatar.png"))
+          .addClass("avatar")
+        .css("padding", "0px 10px 0px 10px"))
         .append($('<div>')
           .append($('<p>')
             .append(response.ServerMessage))
@@ -85,16 +96,13 @@ $("form").submit(function(event){
               )
             )
           .addClass("text text-l"))
-        .append($('<div>')
-        .append($('<img>')
-          .addClass("img-circle")
-          .css("width", "100%")
-          .attr("src", "/images/eliza-avatar.jpg"))
-        .addClass("avatar")
-        .css("padding", "0px 0px 0px 10px"))
         .addClass("msj macro"))
       .css("width", "100%")
       .appendTo( $("ul") ); // $('<li>')
+
+      $("li").slideDown( 300 );
+
+      // $( "li" ).last().animate({left: '250px'});
 
   }) // $.ajax().done()
 

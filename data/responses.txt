@@ -95,6 +95,34 @@ Hi there, how are you today?
 Hello, how are you feeling today?
 Alright, mate?
 
+# e.g. Hi Eliza!
+(?i)^\s*Hi.*$
+Hello, I'm glad we have a chance to chat.
+Hi there, how are you today?
+Hello, how are you feeling today?
+Alright, mate?
+
+# e.g. Good Morning Eliza!
+(?i)^\s*Good morning.*$
+Hello, I'm glad we have a chance to chat.
+Hi there, how are you today?
+Hello, how are you feeling today?
+Alright, mate?
+
+# e.g. Good Morning Eliza!
+(?i)^\s*Good afternoon.*$
+Hello, I'm glad we have a chance to chat.
+Hi there, how are you today?
+Hello, how are you feeling today?
+Alright, mate?
+
+# e.g. Good Morning Eliza!
+(?i)^\s*Good evening.*$
+Hello, I'm glad we have a chance to chat.
+Hi there, how are you today?
+Hello, how are you feeling today?
+Alright, mate?
+
 # e.g. I think I'm lonely
 (?i)^\s*I think ([^.!?]*)[.!?\s]*$
 Do you doubt $1?
@@ -246,6 +274,28 @@ What is your favourite childhood memory?
 Do you remember any dreams or nightmares from childhood?
 Did the other children sometimes tease you?
 How do you think your childhood experiences relate to your feelings today?
+
+# e.g. Goodbye.
+(?i)^.*\bbye\b.*$
+Goodbye. It was nice talking to you.
+Thank you for talking with me.
+Thank you, that will be $150. Have a good day!
+Goodbye. This was really a nice talk.
+Goodbye. I'm looking forward to our next session.
+This was a good session, wasn't it – but time is over now. Goodbye.
+Maybe we could discuss this over more in our next session? Goodbye.
+Good-bye.
+
+# e.g. Goodbye.
+(?i)^.*\bgood night\b.*$
+Goodbye. It was nice talking to you.
+Thank you for talking with me.
+Thank you, that will be $150. Have a good day!
+Goodbye. This was really a nice talk.
+Goodbye. I'm looking forward to our next session.
+This was a good session, wasn't it – but time is over now. Goodbye.
+Maybe we could discuss this over more in our next session? Goodbye.
+Good-bye.
 
 # e.g. quit
 (?i)^\s*quit\s*$
